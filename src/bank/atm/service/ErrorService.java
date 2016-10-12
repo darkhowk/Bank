@@ -7,10 +7,13 @@ public class ErrorService implements CommandProcess {
 
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) {
 		String code = request.getParameter("code");
+
 		if (code == null || code == "") {
 			code = "error_common.jsp";
 		} else {
+
 		}
-		return "erroe.jsp";
+		request.setAttribute("code", code);
+		return "view/atm/error/error.jsp";
 	}
 }

@@ -29,7 +29,7 @@
 		</tr>
 		<tr>
 			<td>
-				<a href="main.do?select=Exit.jsp">종료<img src=""></a>
+				<a href="mainview.do">종료<img src=""></a>
 			</td>
 		</tr>
 	</table>

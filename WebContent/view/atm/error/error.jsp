@@ -6,7 +6,9 @@
 <title>Insert title here</title>
 </head>
 <body>
+
 	<table>
+	
 		<tr>
 			<td>
 				<a><jsp:include page="${code }" /></a>
