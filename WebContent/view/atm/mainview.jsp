@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -16,20 +16,24 @@ input.button {
 	width: 165px;
 	height: 58px;
 	cursor: pointer;
-} */
+}
+table{
+background : ;
+}
+ */
 </style>
 <body>
-	<form name="account" method="post" action="accountnocheck.do">
-		<table width="533" height="350" background="" border="1">
+	<form name="account" method="post" action="account_no_check.do">
+		<table  border="1">
 			<tr>
 				<td valign="top" align="center" colspan="3">
 					<p>
 					<h2>삼조은행에 오신것을 환영합니다.</h2>
 				</td>
 			</tr>
-			<tr align="top" style="WIDTH: 100px" >
+			<tr style="WIDTH: 100px">
 				<td align="center" colspan="3">
-					계좌번호를 입력해 주세요 <input type="text" name="accountno" required="required">
+					계좌번호를 입력해 주세요 <input type="text" name="account_no" required="required">
 				</td>
 			</tr>
 			<tr>

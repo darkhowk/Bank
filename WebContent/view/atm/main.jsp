@@ -23,7 +23,7 @@
 			<td>
 				<a><jsp:include page="${menu }" /></a>
 			</td>
-		</tr>
+		
 	</table>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -9,7 +9,7 @@
 </style>
 </head>
 <body>
-	<table class="notice" width="533" height="350" background="" border="1">
+	<table class="notice" border="1">
 		<tr>
 			<td valign="top" align="center" height="80" ><p><h2>삼조은행에 오신것을 환영합니다.</h2></td>
 		</tr>
