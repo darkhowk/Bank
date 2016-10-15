@@ -9,7 +9,7 @@
 	<table class="buttonback" border="1">
 		<tr>
 			<td>
-			 <a href="deposit.do">입금<img src=""></a>
+				<a href="deposit.do">입금<img src=""></a>
 			</td>
 		</tr>
 		<tr>

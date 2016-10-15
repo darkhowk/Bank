@@ -100,4 +100,9 @@ public class MemberDao {
 
 	}
 
+	public int checkstate(String other_user_no) {
+
+		return 0;
+	}
+
 }

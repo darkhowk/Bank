@@ -34,6 +34,7 @@ public class AccountDao {
 	}
 
 	public String checkaccountno(String accountno) {
+		
 		String result = "";
 		Connection conn = null;
 		PreparedStatement pstmt = null;

@@ -10,7 +10,7 @@
 	<table>
 	
 		<tr>
-			<td>
+			<td align="center">
 				<a><jsp:include page="${code }" /></a>
 			</td>
 		</tr>

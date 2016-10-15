@@ -6,18 +6,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <style>
-/* input.button {
-	background: url(view/atm/img/확인.png) no-repeat;
-	border: none;
-	width: 165px;
-	height: 58px;
-	cursor: pointer;
-} */
 </style>
 </head>
 <body>
 	<form method="post" action="deposit_check.do">
-
 		<table border="1">
 			<tr>
 				<td>입금 금액</td>
@@ -26,11 +18,11 @@
 				</td>
 			</tr>
 			<tr>
-				<td >
+				<td>
 					<input type="submit" value="확인" class="button">
 				</td>
 				<td>
-			<a href="mainview.do">거래종료</a>
+					<a href="mainview.do">거래종료</a>
 				</td>
 			</tr>
 		</table>

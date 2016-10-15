@@ -11,19 +11,14 @@
 </style>
 </head>
 <body>
-
 	<table>
 		<tr>
-
 			<td>
-
 				<a><jsp:include page="${select}" /></a>
 			</td>
-
 			<td>
 				<a><jsp:include page="${menu }" /></a>
 			</td>
-		
 	</table>
 </body>
 </html>

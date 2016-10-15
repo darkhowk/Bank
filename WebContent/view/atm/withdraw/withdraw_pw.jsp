@@ -18,9 +18,7 @@
 <body>
 	<form name="outputmoney" method="post" action="withdraw_pw.do">
 
-		<input type="text" value=${trade_amount } name="trade_amount"> 
-		<input type="text" value=${other_user_name } name="other_user_name"> 
-		<input type="text" value=${other_account_no } name="other_account_no">
+		<input type="text" value=${trade_amount } name="trade_amount">
 
 		<table border="1">
 
@@ -31,12 +29,12 @@
 				</td>
 			</tr>
 			<tr>
-				<td >
+				<td>
 					<input type="submit" value="확인" class="button">
 				</td>
-				  <td>
-      <a href="mainview.do">거래종료</a>
-        </td>
+				<td>
+					<a href="mainview.do">거래종료</a>
+				</td>
 			</tr>
 		</table>
 	</form>

@@ -88,12 +88,13 @@ public class TradeDao {
 
 	}
 
-	public int todattrade(String account_no) {
+	public int todaytrade(String account_no) {
 		int todaytrade = -1;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
+		// 내 통장에서 다른 거래한이체통장번호가 내것이 아니고, 출금인것들중, 오늘 거래한것만 모두 더함. 
 		String sql = "select sum(trade_amount) from trade_his_tb where not trade_account_no=? and  account_no = ? and trade_gbn =? and trade_datetime between date_format(now() , '%Y%m%d000000') and date_format(now() , '%Y%m%d24595999')";
 		try {
 			conn = getConnection();
@@ -124,141 +125,81 @@ public class TradeDao {
 
 	}
 
-	public int insertmoney(String account_no, int trade_amount, String kor_name, String other_kor_name, String content1,
-			String content2, String other_account_no) {
-		int result = 0;
+	public int trademoney(String account_no, String trade_gbn, String trade_account_no, int trade_amount,
+			String content1, String content2) {
 
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql = "insert into trade_his_tb (account_no, trade_gbn, trade_bank, trade_amount, content1, content2, connect_gbn, trade_datetime) values(?,?,?,?,?,?,?,date_format(now(), '%Y%m%d%H%i%S'))";
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, account_no);
-			pstmt.setString(2, "입금");
-			pstmt.setString(3, "0601");
-			pstmt.setInt(4, trade_amount);
-			if (content1.equals("") || content1 == null) {
-				pstmt.setString(5, kor_name);
-			} else {
-				pstmt.setString(5, content1);
-			}
-			if (content2.equals("") || content2 == null) {
-				pstmt.setString(6, other_kor_name);
-			} else {
-				pstmt.setString(6, content2);
-			}
-			pstmt.setString(7, "0103");
-			result = pstmt.executeUpdate();
-
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (pstmt != null)
-					pstmt.close();
-				if (conn != null)
-					conn.close();
-			} catch (Exception e) {
-			}
-		}
-
-		return result;
-	}
-
-	public int inputmoney(String account_no) {
-		int inputmoney = -1;
+		// 초기리턴값 -1
+		int result = -1;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-		String sql = "select  sum(trade_amount) from trade_his_tb where account_no =? and trade_gbn = ? ";
+		// sql1 은 실제로 DB에 기록, sql2 는 기록후 잔액을 읽어옴.
+		String sql1 = "insert into trade_his_tb (account_no, trade_gbn, trade_account_no, trade_bank, trade_amount, content1, content2, connect_gbn, trade_datetime) values (?, ?, ?, ?, ?, ?, ?, ?,date_format(sysdate(), '%Y%m%d%H%i%S'))";
+		String sql2 = "select sum(trade_amount) balance from trade_his_tb where account_no = ?";
 		try {
+			// DB에 기록
 			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(sql1);
 			pstmt.setString(1, account_no);
-			pstmt.setString(2, "입금");
-
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-				inputmoney = rs.getInt(1);
-
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (pstmt != null)
-					pstmt.close();
-				if (conn != null)
-					conn.close();
-			} catch (Exception e) {
-			}
-		}
-
-		return inputmoney;
-	}
-
-	public int outputmoney(String account_no) {
-		int outputmoney = -1;
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		String sql = "select  sum(trade_amount) from trade_his_tb where account_no =? and trade_gbn = ? ";
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, account_no);
-			pstmt.setString(2, "출금");
-
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-				outputmoney = rs.getInt(1);
-
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (pstmt != null)
-					pstmt.close();
-				if (conn != null)
-					conn.close();
-			} catch (Exception e) {
-			}
-		}
-
-		return outputmoney;
-	}
-
-	public int withdraw(String account_no, int total, String kor_name, String other_kor_name, String content1,
-			String conten2, String trade_account_no) {
-		int result = 0;
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql = "insert into trade_his_tb (account_no, trade_account_no, trade_gbn, trade_bank, trade_amount, content1, content2, connect_gbn, trade_datetime) values(?,?,?,?,?,?,?,?,date_format(now(), '%Y%m%d%H%i%S'))";
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, account_no);
-			pstmt.setString(2, trade_account_no);
-			pstmt.setString(3, "출금");
+			pstmt.setString(2, trade_gbn);
+			pstmt.setString(3, trade_account_no);
 			pstmt.setString(4, "0601");
-			pstmt.setInt(5, total);
-			pstmt.setString(6, kor_name);
-			pstmt.setString(7, "");
+			pstmt.setInt(5, trade_amount);
+			pstmt.setString(6, content1);
+			pstmt.setString(7, content2);
 			pstmt.setString(8, "0103");
-
 			result = pstmt.executeUpdate();
+
+			// 기록이 되어서 1건이 정상 처리가 되지 않으면 그 값을 리턴
+			if (result <= 0) {
+				return result;
+
+				// 기록이 되어서 1건이 정상 처리가되면 잔액을 리턴
+			} else {
+				pstmt.close();
+				pstmt = conn.prepareStatement(sql2);
+				pstmt.setString(1, account_no);
+				rs = pstmt.executeQuery();
+				if (rs.next()) {
+					result = rs.getInt("balance");
+					return result;
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
+		}
+		return result;
+	}
+
+	public int balance(String account_no) {
+		int result = 0;
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql1 = "select sum(trade_amount) balance from trade_his_tb where account_no = ?";
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql1);
+			pstmt.setString(1, account_no);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt("balance");
+				return result;
+			} else {
+				result = -1;
+			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
@@ -274,6 +215,7 @@ public class TradeDao {
 		}
 
 		return result;
+
 	}
 
 }

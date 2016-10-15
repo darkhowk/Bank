@@ -1,26 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<style type="text/css">
-</style>
 </head>
 <body>
-	<table class="input" border="1">
+	<table>
 		<tr>
-			<td valign="top" align="center" height="80" colspan="2">
-				<p>
-				<h2>계좌이체</h2>
-			</td>
+			<td>상대방 상태 불량.</td>
 		</tr>
-
-		<tr valign="top" style="WIDTH: 100px">
+		<tr>
 			<td>
-				<a><jsp:include page="${transfer}" /></a>
+				<a href="mainview.do">메인화면으로</a>
 			</td>
-
 		</tr>
 	</table>
 </body>

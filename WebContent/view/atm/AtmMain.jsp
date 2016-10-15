@@ -6,25 +6,11 @@
 <title>Insert title here</title>
 </head>
 <style type="text/css">
-/* body {
-	BACKGROUND-COLOR: black;
-}
-
-input.button {
-	background: url(view/atm/img/확인.png) no-repeat;
-	border: none;
-	width: 165px;
-	height: 58px;
-	cursor: pointer;
-}
-table{
-background : ;
-}
- */
 </style>
 <body>
-	<form name="account" method="post" action="account_no_check.do">
-		<table  border="1">
+	<!--  ac_check.do로 이동 -->
+	<form name="account" method="post" action="ac_check.do">
+		<table border="1">
 			<tr>
 				<td valign="top" align="center" colspan="3">
 					<p>

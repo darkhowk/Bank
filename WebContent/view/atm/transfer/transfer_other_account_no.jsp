@@ -5,18 +5,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <style>
-/* input.button {
-	background: url(view/atm/img/확인.png) no-repeat;
-	border: none;
-	width: 165px;
-	height: 58px;
-	cursor: pointer;
-} */
 </style>
 </head>
 <body>
 	<form method="post" action="transfer_other_check.do">
-
 		<table border="1">
 			<tr>
 				<td>상대방의 계좌번호를 입력해 주세요</td>

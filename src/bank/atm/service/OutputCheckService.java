@@ -14,27 +14,29 @@ public class OutputCheckService implements CommandProcess {
 		int trade_amount = Integer.parseInt(request.getParameter("trade_amount"));
 		String kor_name = (String) session.getAttribute("kor_name");
 		int commission = 900;
-		int total = trade_amount + commission;
-		System.out.println(total +"출금액");
+		int total = -(trade_amount + commission);
+		System.out.println(total);
+		String trade_gbn = "출금";
+		String trade_account_no = account_no;
+		String content1 = kor_name;
+		String content2 = kor_name;
+		int balance;
 		// 계좌 상태 체크
 
 		TradeDao td = TradeDao.getInstance();
-		int result = td.withdraw(account_no, total, kor_name, "", "","", "");
-		// 일단거래 테이블 입력
+		int result = td.trademoney(account_no, trade_gbn, trade_account_no, total, content1, content2);
+
 		if (result <= 0) {
-			// 입력 실패
+			return "error.do?code=withdrawerror.jsp";
+		} else {
+			balance = result;
+
+			request.setAttribute("account_no", account_no);
+			request.setAttribute("trade_amount", trade_amount);
+			request.setAttribute("balance", balance);
+			request.setAttribute("commission", commission);
+			return "view/atm/input/inputcheck.jsp";
 		}
-		int inputmoney = td.inputmoney(account_no);
-		int outputmoney = td.outputmoney(account_no);
-		int balance = inputmoney - outputmoney;
-
-		// 잔액 계산
-
-		request.setAttribute("account_no", account_no);
-		request.setAttribute("trade_amount", trade_amount);
-		request.setAttribute("balance", balance);
-		request.setAttribute("commission", commission);
-		return "view/atm/input/inputcheck.jsp";
 	}
 
 }
