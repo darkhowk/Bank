@@ -7,7 +7,7 @@
 </head>
 <body>
 	<script type="text/javascript">
-		location.href = "mainview.do";
+		location.replace('mainview.do');
 	</script>
 </body>
 

@@ -6,6 +6,12 @@
 <title>Insert title here</title>
 <style type="text/css">
 </style>
+<script>
+	history.pushState(null, null, location.href);
+	window.onpopstate = function(event) {
+		history.go(1);
+	}
+</script>
 </head>
 <body>
 	<table border="1">

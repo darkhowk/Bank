@@ -18,7 +18,7 @@
 <body>
 	<form name="outputmoney" method="post" action="withdraw_pw.do">
 
-		<input type="text" value=${trade_amount } name="trade_amount">
+		<input type="hidden" value=${trade_amount } name="trade_amount">
 
 		<table border="1">
 

@@ -7,6 +7,12 @@
 <style type="text/css">
 </style>
 </head>
+<script>
+	history.pushState(null, null, location.href);
+	window.onpopstate = function(event) {
+		history.go(1);
+	}
+</script>
 <body>
 	<table class="input" border="1">
 		<tr>

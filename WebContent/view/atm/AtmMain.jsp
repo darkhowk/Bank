@@ -5,6 +5,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
+<script>
+	history.pushState(null, null, location.href);
+	window.onpopstate = function(event) {
+		history.go(1);
+	}
+</script>
 <style type="text/css">
 </style>
 <body>

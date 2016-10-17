@@ -55,20 +55,13 @@ public class WithdrawPwService implements CommandProcess {
 				int result = td.trademoney(account_no, trade_gbn, trade_account_no, total, content1, content2);
 
 				// 잔액이 0보다 작다면, DB에서 기록 또는 잔액 읽어오기 실패.
-				if (result <= 0) {
-					return "error.do?code=withdraw_db_error.jsp";
+				balance = result;
+				request.setAttribute("account_no", account_no);
+				request.setAttribute("trade_amount", trade_amount);
+				request.setAttribute("balance", balance);
+				request.setAttribute("commission", commission);
+				return "withdraw.do?withdraw=withdraw_check.jsp";
 
-					// 잔액이 0보다 크면, 기록 성공.
-				} else {
-
-					// 결과를 잔액에 넣고, 다음 페이지로 필요한 변수들을 보내줌.
-					balance = result;
-					request.setAttribute("account_no", account_no);
-					request.setAttribute("trade_amount", trade_amount);
-					request.setAttribute("balance", balance);
-					request.setAttribute("commission", commission);
-					return "withdraw.do?withdraw=withdraw_check.jsp";
-				}
 			}
 			// 이름이 틀리면 오류창으로.
 		} else {

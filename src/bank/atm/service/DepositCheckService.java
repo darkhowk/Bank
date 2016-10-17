@@ -22,10 +22,10 @@ public class DepositCheckService implements CommandProcess {
 		String content1 = kor_name;
 		String content2 = kor_name;
 		String trade_account_no = account_no;
-		
+
 		// TradeDao 초기화, 메모리할당
 		TradeDao td = TradeDao.getInstance();
-		
+
 		// DB에 입금을 기록
 		int result = td.trademoney(account_no, trade_gbn, trade_account_no, trade_amount, content1, content2);
 

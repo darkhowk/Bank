@@ -34,7 +34,6 @@ public class AccountDao {
 	}
 
 	public String checkaccountno(String accountno) {
-		
 		String result = "";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -46,6 +45,7 @@ public class AccountDao {
 			pstmt.setString(1, accountno);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
+
 				result = rs.getString("user_no");
 			}
 		} catch (Exception e) {
