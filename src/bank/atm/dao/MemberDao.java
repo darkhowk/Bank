@@ -3,8 +3,8 @@ package bank.atm.dao;
 import java.io.IOException;
 import java.io.Reader;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -66,33 +66,19 @@ public class MemberDao {
 
 	public String chk(String user_no, String user_pw) {
 		String result = "";
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		String sql = "select * from member_tb where user_no =? and user_pw = password(?)";
+		String kor_name = "";
+		Map<String, String> map = new HashMap<>();
+		map.put("user_no", user_no);
+		map.put("user_pw", user_pw);
 		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, user_no);
-			pstmt.setString(2, user_pw);
+			kor_name = (String) session.selectOne("Member.select", user_no);
+			if (kor_name.equals("") || kor_name == null) {
 
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-				result = rs.getString("kor_name");
+			} else {
+				result = kor_name;
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (pstmt != null)
-					pstmt.close();
-				if (conn != null)
-					conn.close();
-			} catch (Exception e) {
-			}
 		}
 
 		return result;

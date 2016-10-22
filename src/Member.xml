@@ -23,7 +23,8 @@
 	</select>
 	<select id="select" parameterType="int" resultType="Member">
 		select * from
-		member_tb where user_state = '0301' and del_flag = 'N' and user_no = #{user_no}
+		member_tb where user_state = '0301' and del_flag = 'N' and user_no =
+		#{user_no}
 	</select>
 	<delete id="delete" parameterType="int">
 		delete from dept where
@@ -38,4 +39,9 @@
 		insert into dept values
 		(#{deptno},#{dname},#{loc})
 	</insert>
+	<select id="selectName" resultMap="String" parameterType="map">
+		select
+		kor_name from member_tb where user_no =#{user_no} and user_pw =
+		password(#{user_pw})
+	</select>
 </mapper>
