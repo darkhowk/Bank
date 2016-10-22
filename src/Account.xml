@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Account">
+	<resultMap id="AccountResult" type="Account">
+		<result property="account_no" column="account_no" />
+		<result property="account_pw" column="account_pw" />
+		<result property="user_no" column="user_no" />
+		<result property="product_code" column="product_code" />
+		<result property="account_state" column="account_state" />
+		<result property="day_trans_limit" column="day_trans_limit" />
+		<result property="once_trans_limit" column="once_trans_limit" />
+		<result property="reg_date" column="reg_date" />
+		<result property="user_flag" column="user_flag" />
+	</resultMap>
+	<select id="selectList" resultMap="AccountResult">
+		select * from account_tb where
+		account_state = '0401';
+	</select>
+	<select id="select" parameterType="int" resultType="Account">
+		select * from	account_tb where account_state = '0401' and account_no = #{account_no};
+	</select>
+	<delete id="delete" parameterType="int">
+		delete from account_tb where
+		account_no=#{account_no}
+	</delete>
+	<update id="update" parameterType="Account">
+		update account_tb set
+		dname=#{dname},loc=#{loc}
+		where deptno=#{deptno}
+	</update>
+	<insert id="insert" parameterType="Account">
+		insert into dept values
+		(#{deptno},#{dname},#{loc})
+	</insert>
+</mapper>

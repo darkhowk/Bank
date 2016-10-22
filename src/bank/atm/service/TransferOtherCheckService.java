@@ -18,7 +18,7 @@ public class TransferOtherCheckService implements CommandProcess {
 		MemberDao md = MemberDao.getInstance();
 
 		// 상대 계좌번호를 체크해서 값을 읽어옴.
-		String other_user_no = ad.checkaccountno(other_account_no);
+		String other_user_no = ad.checkid(other_account_no); // mybatis
 
 		// 상대 유저번호가 없으면 상대방 상태가 정상이 아님.
 		if (other_user_no == null || other_user_no.equals("")) {
@@ -27,7 +27,7 @@ public class TransferOtherCheckService implements CommandProcess {
 			// 상대방 이름을 가져오면서 상태 체크
 		} else {
 
-			String other_user_name = md.getkor_name(other_user_no);
+			String other_user_name = md.getKorName(other_user_no);
 
 			// 만약 상대방 이름이 없으면 상태가 정상이 아님.
 			if (other_user_name.equals("") || other_user_name == null) {

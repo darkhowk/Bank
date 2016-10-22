@@ -1,5 +1,7 @@
 package bank.atm.dao;
 
+import java.io.IOException;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,12 +12,30 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
+import com.ibatis.common.resources.Resources;
+
+import bank.atm.model.Trade;
+
 public class TradeDao {
 	private static TradeDao instance = new TradeDao();
 
 	private TradeDao() {
 	}
-
+	private static SqlSession session;
+	static {
+		try {
+			Reader reader = Resources.getResourceAsReader("configuration.xml");
+			SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(reader);
+			session = ssf.openSession(true);
+			reader.close();
+		} catch (IOException e) {
+			System.out.println("sqlMap Error : " + e.getMessage());
+		}
+	}
 	public static TradeDao getInstance() {
 		return instance;
 	}

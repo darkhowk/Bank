@@ -1,5 +1,7 @@
 package bank.atm.dao;
 
+import java.io.IOException;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,10 +10,30 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
+import com.ibatis.common.resources.Resources;
+
+import bank.atm.model.Member;
+
 public class MemberDao {
 	private static MemberDao instance = new MemberDao();
 
 	private MemberDao() {
+	}
+
+	private static SqlSession session;
+	static {
+		try {
+			Reader reader = Resources.getResourceAsReader("configuration.xml");
+			SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(reader);
+			session = ssf.openSession(true);
+			reader.close();
+		} catch (IOException e) {
+			System.out.println("sqlMap Error : " + e.getMessage());
+		}
 	}
 
 	public static MemberDao getInstance() {
@@ -31,37 +53,14 @@ public class MemberDao {
 		return conn;
 	}
 
-	public String getkor_name(String user_no) {
+	public String getKorName(String user_no) {
 		String name = "";
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		String sql = "select kor_name from member_tb where user_no =? and user_state=?";
 		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, user_no);
-			pstmt.setString(2, "0301");
-
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-				name = rs.getString(1);
-			}
+			Member member = (Member) session.selectOne("Member.select", user_no);
+			name = member.getKor_name();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (pstmt != null)
-					pstmt.close();
-				if (conn != null)
-					conn.close();
-			} catch (Exception e) {
-			}
 		}
-		System.out.println(name);
 		return name;
 	}
 

@@ -6,8 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import bank.atm.dao.Trade;
 import bank.atm.dao.TradeDao;
+import bank.atm.model.Trade;
 
 public class SearchService implements CommandProcess {
 

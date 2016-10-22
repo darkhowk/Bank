@@ -1,4 +1,4 @@
-package bank.atm.dao;
+package bank.atm.model;
 
 public class Member {
 	private int user_no;

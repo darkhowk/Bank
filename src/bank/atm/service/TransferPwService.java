@@ -4,10 +4,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import bank.atm.dao.Account;
 import bank.atm.dao.AccountDao;
 import bank.atm.dao.MemberDao;
 import bank.atm.dao.TradeDao;
+import bank.atm.model.Account;
 
 public class TransferPwService implements CommandProcess {
 

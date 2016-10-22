@@ -1,4 +1,4 @@
-package bank.atm.dao;
+package bank.atm.model;
 
 public class Trade {
 	private int trade_no;

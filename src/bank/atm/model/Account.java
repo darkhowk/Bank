@@ -1,4 +1,4 @@
-package bank.atm.dao;
+package bank.atm.model;
 
 public class Account {
 	private String account_no;
@@ -7,7 +7,6 @@ public class Account {
 	private String product_code;
 	private String account_state;
 	private int day_trans_limit;
-	private int dat_rrst_limit;
 	private int once_trans_limit;
 	private String reg_date;
 	private String user_flag;
@@ -58,14 +57,6 @@ public class Account {
 
 	public void setDay_trans_limit(int day_trans_limit) {
 		this.day_trans_limit = day_trans_limit;
-	}
-
-	public int getDat_rrst_limit() {
-		return dat_rrst_limit;
-	}
-
-	public void setDat_rrst_limit(int dat_rrst_limit) {
-		this.dat_rrst_limit = dat_rrst_limit;
 	}
 
 	public int getOnce_trans_limit() {

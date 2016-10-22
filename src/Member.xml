@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Member">
+	<resultMap id="MemberResult" type="Member">
+		<result property="user_no" column="user_no" />
+		<result property="user_id" column="user_id" />
+		<result property="user_pw" column="user_pw" />
+		<result property="kor_name" column="kor_name" />
+		<result property="eng_name" column="eng_name" />
+		<result property="birthday" column="birthday" />
+		<result property="address" column="address" />
+		<result property="phone" column="phone" />
+		<result property="email" column="email" />
+		<result property="reg_date" column="reg_date" />
+		<result property="security_gbn" column="security_gbn" />
+		<result property="pin_number" column="pin_number" />
+		<result property="del_flag" column="del_flag" />
+		<result property="user_state" column="user_state" />
+	</resultMap>
+	<select id="selectList" resultMap="MemberResult">
+		select * from member_tb
+	</select>
+	<select id="select" parameterType="int" resultType="Member">
+		select * from
+		member_tb where user_state = '0301' and del_flag = 'N' and user_no = #{user_no}
+	</select>
+	<delete id="delete" parameterType="int">
+		delete from dept where
+		deptno=#{deptno}
+	</delete>
+	<update id="update" parameterType="Member">
+		update dept set
+		dname=#{dname},loc=#{loc}
+		where deptno=#{deptno}
+	</update>
+	<insert id="insert" parameterType="Member">
+		insert into dept values
+		(#{deptno},#{dname},#{loc})
+	</insert>
+</mapper>
