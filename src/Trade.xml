@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Trade">
+	<resultMap id="TradeResult" type="Trade">
+		<result property="trade_no" column="trade_no" />
+		<result property="trade_amount" column="trade_amount" />
+		<result property="account_no" column="account_no" />
+		<result property="trade_account_no" column="trade_account_no" />
+		<result property="trade_bank" column="trade_bank" />
+		<result property="content1" column="content1" />
+		<result property="content2" column="content2" />
+		<result property="connect_gbn" column="connect_gbn" />
+		<result property="trade_datetime" column="trade_datetime" />
+	</resultMap>
+	<select id="selectList" resultMap="TradeResult" parameterType="String">
+		select *, STR_TO_DATE(trade_datetime, '%Y%m%d%H%i%s') as
+		trade_datetime from trade_his_tb
+		where account_no = #{account_no}
+	</select>
+	<select id="today_trade" resultType="int" parameterType="String">
+		select
+		sum(trade_amount) as
+		trade_amount from
+		trade_his_tb where not
+		trade_account_no=#{account_no}
+		and account_no =
+		#{account_no} and
+		trade_gbn ='입금' and trade_datetime
+		between
+		date_format(now() ,
+		'%Y%m%d000000') and date_format(now() ,
+		'%Y%m%d24595999')
+	</select>
+	<insert id="trade_his" parameterMap="TradeResult">
+		insert into trade_his_tb
+		(account_no, trade_gbn, trade_account_no,
+		trade_bank, trade_amount,
+		content1, content2, connect_gbn,
+		trade_datetime) values (#{account_no},
+		#{trade_gbn}, #{trade_account_no},'0601', #{trade_amount},
+		#{content1}, #{content2}, '0103',date_format(sysdate(),
+		'%Y%m%d%H%i%S'))
+	</insert>
+	<select id="get_balance" parameterType="String" resultType="int">
+		select sum(trade_amount) as trade_amount from trade_his_tb
+		where
+		account_no = #{account_no}
+	</select>
+</mapper>

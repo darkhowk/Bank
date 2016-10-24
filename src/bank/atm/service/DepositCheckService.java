@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bank.atm.dao.TradeDao;
+import bank.atm.model.Trade;
 
 public class DepositCheckService implements CommandProcess {
 
@@ -27,7 +28,14 @@ public class DepositCheckService implements CommandProcess {
 		TradeDao td = TradeDao.getInstance();
 
 		// DB에 입금을 기록
-		int result = td.trademoney(account_no, trade_gbn, trade_account_no, trade_amount, content1, content2);
+		Trade trade = new Trade();
+		trade.setAccount_no(account_no);
+		trade.setTrade_gbn(trade_gbn);
+		trade.setTrade_account_no(trade_account_no);
+		trade.setTrade_amount(trade_amount);
+		trade.setContent1(content1);
+		trade.setContent2(content2);
+		int result = td.trademoney(trade);
 
 		if (result <= 0) {
 			return "error.do?code=deposit_amount_error.jsp";

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import bank.atm.dao.MemberDao;
 import bank.atm.dao.TradeDao;
+import bank.atm.model.Trade;
 
 public class WithdrawPwService implements CommandProcess {
 
@@ -34,10 +35,18 @@ public class WithdrawPwService implements CommandProcess {
 		int total = -(trade_amount + commission);
 
 		// 필요한 변수들 선언
-		String trade_gbn = "출금";
 		String trade_account_no = account_no;
 		String content1 = kor_name;
 		String content2 = kor_name;
+		Trade trade = new Trade();
+		trade.setAccount_no(account_no);
+		trade.setConnect_gbn("0103");
+		trade.setContent1(content1);
+		trade.setContent2(content2);
+		trade.setTrade_account_no(trade_account_no);
+		trade.setTrade_amount(total);
+		trade.setTrade_bank("0601");
+		trade.setTrade_gbn("출금");
 
 		// 만약 원래 가지고온 이름과 비밀번호확인후 가져온 이름이 같으면 정상적인 상태.
 		if (kor_name.equals(kor_name2)) {
@@ -52,7 +61,7 @@ public class WithdrawPwService implements CommandProcess {
 			} else {
 
 				// DB에 데이터 입력, 잔액을 가져옴
-				int result = td.trademoney(account_no, trade_gbn, trade_account_no, total, content1, content2);
+				int result = td.trademoney(trade);
 
 				// 잔액이 0보다 작다면, DB에서 기록 또는 잔액 읽어오기 실패.
 				balance = result;

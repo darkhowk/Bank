@@ -2,13 +2,8 @@ package bank.atm.dao;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -38,19 +33,6 @@ public class MemberDao {
 
 	public static MemberDao getInstance() {
 		return instance;
-	}
-
-	// Connection pool
-	private Connection getConnection() {
-		Connection conn = null;
-		try {
-			Context ctx = new InitialContext();
-			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/MySql");
-			conn = ds.getConnection();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		return conn;
 	}
 
 	public String getKorName(String user_no) {

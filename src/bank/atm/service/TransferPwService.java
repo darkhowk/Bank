@@ -8,6 +8,7 @@ import bank.atm.dao.AccountDao;
 import bank.atm.dao.MemberDao;
 import bank.atm.dao.TradeDao;
 import bank.atm.model.Account;
+import bank.atm.model.Trade;
 
 public class TransferPwService implements CommandProcess {
 
@@ -27,8 +28,6 @@ public class TransferPwService implements CommandProcess {
 		String account_no = (String) session.getAttribute("account_no");
 		String user_no = (String) session.getAttribute("user_no");
 		String user_name = (String) session.getAttribute("kor_name");
-		String trade_gbn = "출금";
-		String trade_gbn2 = "입금";
 		String content1 = user_name;
 		String content2 = other_user_name;
 
@@ -53,7 +52,7 @@ public class TransferPwService implements CommandProcess {
 			// 오늘 이체한 금액을 가져옴. 그리고 양수로 바꿔줌
 			int todaytrade = -(td.todaytrade(account_no));
 			System.out.println(todaytrade);
-			System.out.println(as.getOnce_trans_limit()+"::1회이체");
+			System.out.println(as.getOnce_trans_limit() + "::1회이체");
 			System.out.println(trade_amount);
 			// 만약 거래금액이 1회 거래액 크다면 거래 제한
 			if (trade_amount > as.getOnce_trans_limit()) {
@@ -77,7 +76,16 @@ public class TransferPwService implements CommandProcess {
 					} else {
 
 						// 일단 내 통장에서 돈을 뺌
-						int result1 = td.trademoney(account_no, trade_gbn, trade_account_no, total, content1, content2);
+						Trade trade = new Trade();
+						trade.setAccount_no(account_no);
+						trade.setConnect_gbn("0103");
+						trade.setContent1(content1);
+						trade.setContent2(content2);
+						trade.setTrade_account_no(trade_account_no);
+						trade.setTrade_amount(total);
+						trade.setTrade_bank("0601");
+						trade.setTrade_gbn("출금");
+						int result1 = td.trademoney(trade);
 
 						// 결과 잔액이 0보다 작으면 DB입력에서 에러.
 						if (result1 <= 0) {
@@ -85,8 +93,17 @@ public class TransferPwService implements CommandProcess {
 
 							// 상대 통장에 돈을 넣어줌.
 						} else {
-							int result2 = td.trademoney(trade_account_no, trade_gbn2, account_no, trade_amount,
-									content2, content1);
+							Trade trade2 = new Trade();
+							trade2.setAccount_no(trade_account_no);
+							trade2.setConnect_gbn("0103");
+							trade2.setContent1(content2);
+							trade2.setContent2(content1);
+							trade2.setTrade_account_no(account_no);
+							trade2.setTrade_amount(trade_amount);
+							trade2.setTrade_bank("0601");
+							trade2.setTrade_gbn("입금");
+
+							int result2 = td.trademoney(trade);
 
 							// 만약 상대편 잔액이 0보다 작으면 DB입력 에러
 							if (result2 <= 0) {
