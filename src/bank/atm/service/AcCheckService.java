@@ -10,19 +10,22 @@ import bank.atm.dao.MemberDao;
 public class AcCheckService implements CommandProcess {
 
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) {
+System.out.println("1-1");
 
 		// AtmMain.jsp에 있던 account_no 요청
 		String account_no = request.getParameter("account_no");
-
+System.out.println("1-2");
 		// AccountDao, MemberDao 메모리 할당, 초기화.
 		AccountDao ad = AccountDao.getInstance();
+		System.out.println("1-03");
 		MemberDao md = MemberDao.getInstance();
 		// 입력받은 계좌번호로 유저넘버, 이름 가져오기
-
+		System.out.println("1");
 		String user_no = ad.checkid(account_no); // mybatis
+		System.out.println("2");
 		String kor_name = md.getKorName(user_no);
 		// 만약 가져온 이름이 없거나, 빈칸이라면 존재 하지 않은 계좌번호.
-		if (user_no.equals("") || user_no == null) {
+		if (user_no == null || user_no.equals("")) {
 
 			return "error.do?code=account_not_existence.jsp";
 

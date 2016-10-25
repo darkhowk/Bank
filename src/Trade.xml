@@ -8,12 +8,13 @@
 		<result property="account_no" column="account_no" />
 		<result property="trade_account_no" column="trade_account_no" />
 		<result property="trade_bank" column="trade_bank" />
+		<result property="trade_gbn" column="trade_gbn" />
 		<result property="content1" column="content1" />
 		<result property="content2" column="content2" />
 		<result property="connect_gbn" column="connect_gbn" />
 		<result property="trade_datetime" column="trade_datetime" />
 	</resultMap>
-	<select id="selectList" resultMap="TradeResult" parameterType="String">
+	<select id="select" resultMap="TradeResult" parameterType="String">
 		select *, STR_TO_DATE(trade_datetime, '%Y%m%d%H%i%s') as
 		trade_datetime from trade_his_tb
 		where account_no = #{account_no}
@@ -32,15 +33,18 @@
 		'%Y%m%d000000') and date_format(now() ,
 		'%Y%m%d24595999')
 	</select>
-	<insert id="trade_his" parameterMap="TradeResult">
-		insert into trade_his_tb
-		(account_no, trade_gbn, trade_account_no,
-		trade_bank, trade_amount,
-		content1, content2, connect_gbn,
-		trade_datetime) values (#{account_no},
-		#{trade_gbn}, #{trade_account_no},'0601', #{trade_amount},
-		#{content1}, #{content2}, '0103',date_format(sysdate(),
+	<insert id="trade_his" parameterType="Trade">
+		insert into
+		trade_his_tb
+		(account_no, trade_gbn, trade_account_no, trade_bank,
+		trade_amount,
+		content1, content2, connect_gbn, trade_datetime)
+		values
+		(#{account_no},#{trade_gbn}, #{trade_account_no},#{trade_bank},
+		#{trade_amount}, #{content1},
+		#{content2},#{connect_gbn},date_format(sysdate(),
 		'%Y%m%d%H%i%S'))
+
 	</insert>
 	<select id="get_balance" parameterType="String" resultType="int">
 		select sum(trade_amount) as trade_amount from trade_his_tb

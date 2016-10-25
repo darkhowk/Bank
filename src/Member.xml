@@ -18,28 +18,14 @@
 		<result property="del_flag" column="del_flag" />
 		<result property="user_state" column="user_state" />
 	</resultMap>
-	<select id="selectList" resultMap="MemberResult">
-		select * from member_tb
-	</select>
-	<select id="select" parameterType="int" resultType="Member">
-		select * from
-		member_tb where user_state = '0301' and del_flag = 'N' and user_no =
+	<select id="select" parameterType="String" resultMap="MemberResult">
+		select *
+		from
+		member_tb where user_state = '0301' and del_flag = 'N' and user_no
+		=
 		#{user_no}
 	</select>
-	<delete id="delete" parameterType="int">
-		delete from dept where
-		deptno=#{deptno}
-	</delete>
-	<update id="update" parameterType="Member">
-		update dept set
-		dname=#{dname},loc=#{loc}
-		where deptno=#{deptno}
-	</update>
-	<insert id="insert" parameterType="Member">
-		insert into dept values
-		(#{deptno},#{dname},#{loc})
-	</insert>
-	<select id="selectName" resultMap="String" parameterType="map">
+	<select id="selectName" resultType="String" parameterType="map">
 		select
 		kor_name from member_tb where user_no =#{user_no} and user_pw =
 		password(#{user_pw})

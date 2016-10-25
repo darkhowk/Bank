@@ -51,9 +51,7 @@ public class TransferPwService implements CommandProcess {
 
 			// 오늘 이체한 금액을 가져옴. 그리고 양수로 바꿔줌
 			int todaytrade = -(td.todaytrade(account_no));
-			System.out.println(todaytrade);
-			System.out.println(as.getOnce_trans_limit() + "::1회이체");
-			System.out.println(trade_amount);
+		
 			// 만약 거래금액이 1회 거래액 크다면 거래 제한
 			if (trade_amount > as.getOnce_trans_limit()) {
 				return "error.do?code=transfer_once_transfer_limit.jsp";

@@ -53,8 +53,9 @@ public class MemberDao {
 		map.put("user_no", user_no);
 		map.put("user_pw", user_pw);
 		try {
-			kor_name = (String) session.selectOne("Member.select", user_no);
-			if (kor_name.equals("") || kor_name == null) {
+			kor_name = (String) session.selectOne("Member.selectName", map);
+
+			if (kor_name == null || kor_name.equals("")) {
 
 			} else {
 				result = kor_name;
@@ -62,14 +63,6 @@ public class MemberDao {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-
 		return result;
-
 	}
-
-	public int checkstate(String other_user_no) {
-
-		return 0;
-	}
-
 }

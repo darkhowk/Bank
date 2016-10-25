@@ -17,7 +17,7 @@
 		select * from account_tb where
 		account_state = '0401';
 	</select>
-	<select id="select" parameterType="int" resultType="Account">
+	<select id="select" parameterType="String" resultMap="AccountResult">
 		select * from	account_tb where account_state = '0401' and account_no = #{account_no};
 	</select>
 	<delete id="delete" parameterType="int">
@@ -29,8 +29,4 @@
 		dname=#{dname},loc=#{loc}
 		where deptno=#{deptno}
 	</update>
-	<insert id="insert" parameterType="Account">
-		insert into dept values
-		(#{deptno},#{dname},#{loc})
-	</insert>
 </mapper>

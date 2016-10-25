@@ -52,7 +52,7 @@ public class WithdrawPwService implements CommandProcess {
 		if (kor_name.equals(kor_name2)) {
 			// 거래 전 잔액을 가져옴
 			balance = td.balance(account_no);
-
+			System.out.println(balance + "::거래전장개");
 			// 만약 출금액이 잔액보다 크다면 에러.
 			if (total > balance) {
 				return "error.do?code=withdraw_trade_amount_over.jsp";
@@ -62,7 +62,7 @@ public class WithdrawPwService implements CommandProcess {
 
 				// DB에 데이터 입력, 잔액을 가져옴
 				int result = td.trademoney(trade);
-
+				System.out.println(result + "거래후잔액");
 				// 잔액이 0보다 작다면, DB에서 기록 또는 잔액 읽어오기 실패.
 				balance = result;
 				request.setAttribute("account_no", account_no);

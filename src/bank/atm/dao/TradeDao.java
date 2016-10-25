@@ -40,7 +40,7 @@ public class TradeDao {
 		List<Trade> list = new ArrayList<>();
 
 		try {
-			list = session.selectList("Trade.selectlist", account_no);
+			list = session.selectList("Trade.select", account_no);
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -70,8 +70,7 @@ public class TradeDao {
 		int result = -1;
 
 		try {
-			result = (int) session.selectOne("Trade.trade_his", trade);
-
+			result = session.insert("Trade.trade_his", trade);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -80,6 +79,7 @@ public class TradeDao {
 
 			// 기록이 되어서 1건이 정상 처리가되면 잔액을 리턴
 		} else {
+			System.out.println(trade.getAccount_no() + "::account_no");
 			result = (int) session.selectOne("Trade.get_balance", trade.getAccount_no());
 		}
 
